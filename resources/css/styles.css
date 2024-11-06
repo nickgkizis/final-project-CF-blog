@@ -1,0 +1,31 @@
+
+/* Hiding SVG icons in pagination links */
+.pagination .page-link svg {
+    display: none; /* Hides the SVG arrows */
+}
+
+/* Ensuring pagination link styles */
+.pagination .page-item {
+    margin: 0 5px; /* Adjusts spacing between items */
+}
+
+.pagination .page-link {
+    font-size: 0.9rem; /* Adjusts size of page number links */
+    padding: 0.4rem 0.6rem; /* Adjusts padding */
+    color: #007bff; /* Primary color for links */
+    text-decoration: none; /* Removes underline */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Background color for active item */
+    color: white; /* Text color for active item */
+}
+
+.pagination .page-link:hover {
+    background-color: #e2e6ea; /* Background color on hover */
+    color: #0056b3; /* Text color on hover */
+}
+.bg-primary {
+    background-color: aqua;
+    color: black;
+}
