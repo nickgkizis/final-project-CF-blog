@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    
+
     // Show registration form
     public function showRegistrationForm()
     {
@@ -36,7 +38,7 @@ class UserController extends Controller
         Auth::login($user);
 
         // Redirect to dashboard or home
-        return redirect('/dashboard');
+        return redirect('/');
     }
 
     // Show login form
@@ -56,13 +58,11 @@ class UserController extends Controller
 
         // Attempt to log the user in
         if (Auth::attempt($request->only('email', 'password'))) {
+            session()->flash('login_success', true); 
             session()->flash('message', 'Welcome back, ' . auth()->user()->name . '! You are successfully logged in!');
             return redirect('/');
         }
         
-        
-        
-
         // If authentication fails, redirect back with an error message
         return back()->withErrors(['email' => 'Invalid credentials.']);
     }
@@ -84,30 +84,25 @@ class UserController extends Controller
         return view('allUsers', compact('users')); // Return the view with users data
     }
 
-    // Show form to create a new user
-    public function create()
-    {
-        return view('createUser');
-    }
+    // public function create()
+    // {
+    //     return view('createUser');
+    // }
 
-    // Store a new user
-    public function store(Request $request)
-{
-    // Validate the input
-    $validated = $request->validate([
-        'name' => 'required|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:8|confirmed', // Password should be confirmed and at least 8 characters
-    ]);
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'name' => 'required|max:255',
+    //         'email' => 'required|email|unique:users,email',
+    //         'password' => 'required|min:8|confirmed', 
+    //     ]);
 
-    // Hash the password before saving the user
-    $validated['password'] = Hash::make($validated['password']);
+    //     $validated['password'] = Hash::make($validated['password']);
 
-    // Create the user with the validated data
-    User::create($validated);
+    //     User::create($validated);
 
-    return redirect()->route('users.index')->with('success', 'User created successfully!');
-}
+    //     return redirect()->route('users.index')->with('success', 'User created successfully!');
+    // }
 
     // Show a specific user
     public function show($id)
@@ -134,4 +129,6 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('error', 'User not found.');
     }
+
+
 }

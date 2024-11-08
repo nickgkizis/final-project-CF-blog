@@ -1,4 +1,8 @@
-<!-- resources/views/allUsers.blade.php -->
+@extends('layouts.app')
+
+@section('title', 'Main Page')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,7 @@
     <div class="container my-5">
         <div class="d-flex justify-content-between mb-4">
             <h1>All Users</h1>
-            <a href="{{ route('users.create') }}" class="btn btn-success">Create New User</a>
+            <a href="{{ route('register') }}" class="btn btn-success">Create New User</a>
             <a href="{{ url('/') }}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; font-size: 1.1em; text-decoration: none; border-radius: 4px; text-align: center; transition: background-color 0.3s ease;">
             Back to Main
         </a>
@@ -49,3 +53,4 @@
     </div>
 </body>
 </html>
+@endsection

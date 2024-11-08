@@ -1,4 +1,8 @@
+@extends('layouts.app')
 
+@section('title', 'Main Page')
+
+@section('content')
 
 
 <!DOCTYPE html>
@@ -101,7 +105,11 @@
             </div>
             <button type="submit">Create Article</button>
         </form>
+        <a href="{{ url('/') }}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; font-size: 1.1em; text-decoration: none; border-radius: 4px; text-align: center; transition: background-color 0.3s ease;">
+            Back to Main
+        </a>
     </div>
 
 </body>
 </html>
+@endsection
