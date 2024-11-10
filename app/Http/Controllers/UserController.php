@@ -80,29 +80,10 @@ class UserController extends Controller
      // Show all users
     public function index()
     {
-        $users = User::paginate(20); // Paginate the list of users
-        return view('allUsers', compact('users')); // Return the view with users data
+        $users = User::paginate(5); // Paginate the list of users
+        return view('users.allUsers', compact('users')); // Return the view with users data
     }
 
-    // public function create()
-    // {
-    //     return view('createUser');
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'name' => 'required|max:255',
-    //         'email' => 'required|email|unique:users,email',
-    //         'password' => 'required|min:8|confirmed', 
-    //     ]);
-
-    //     $validated['password'] = Hash::make($validated['password']);
-
-    //     User::create($validated);
-
-    //     return redirect()->route('users.index')->with('success', 'User created successfully!');
-    // }
 
     // Show a specific user
     public function show($id)
@@ -113,7 +94,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('error', 'User not found.');
         }
 
-        return view('singleUser', compact('user'));
+        return view('users.singleUser', compact('user'));
     }
 
     public function destroy($id)

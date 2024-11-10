@@ -1,0 +1,123 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+}
+.container {
+    max-width: 1200px;
+}
+header {
+    background-color: #343a40;
+    padding: 25px 0;
+    color: #fff;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+.list-group-item {
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+.list-group-item:hover {
+    background-color: #007bff;
+    color: white;
+}
+span {
+    font-size: 2.5rem;
+    color: #6c757d;
+    margin-left: 10px;
+}
+.nav-i{
+    margin:0 10px;
+}
+.nav-mid{
+    display: flex;
+}
+nav a{
+    font-size: 2.5rem;
+}
+nav i{
+    font-size: 2.5rem;
+}
+
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 30px 0; /* Increase padding for bigger footer */
+    font-size: 1.25rem;
+    text-align: center;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+        
+/* Hiding SVG icons in pagination links */
+.pagination .page-link svg {
+    display: none; /* Hides the SVG arrows */
+}
+
+/* Ensuring pagination link styles */
+.pagination .page-item {
+    margin: 0 5px; /* Adjusts spacing between items */
+}
+
+.pagination .page-link {
+    font-size: 0.9rem; /* Adjusts size of page number links */
+    padding: 0.4rem 0.6rem; /* Adjusts padding */
+    color: #007bff; /* Primary color for links */
+    text-decoration: none; /* Removes underline */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Background color for active item */
+    color: white; /* Text color for active item */
+}
+
+.pagination .page-link:hover {
+    background-color: #e2e6ea; /* Background color on hover */
+    color: #0056b3; /* Text color on hover */
+}
+.bg-primary {
+    background-color: aqua;
+    color: black;
+}
+
+
+
+/* Modal Styling */
+.login-success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+.login-success-modal.show {
+    display: flex;
+}
+.icon-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    font-size: 15rem;
+    transition: all 1s ease-in-out;
+}
+.icon-container .fa-lock-open {
+    display: none;
+}
+.icon-container.unlock .fa-lock {
+    display: none;
+}
+.icon-container.unlock .fa-lock-open {
+    display: inline;
+}

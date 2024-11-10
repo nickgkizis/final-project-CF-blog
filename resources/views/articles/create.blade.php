@@ -1,115 +1,36 @@
+
 @extends('layouts.app')
 
-@section('title', 'Main Page')
+@section('title', 'Create Article')
 
 @section('content')
+<!-- Styles -->
+<link rel="stylesheet" href="{{ asset('styles/articles/edit-create.blade.css') }}">
 
+<div class="form-container">
+    <h1>Create a New Article</h1>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Article</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-        }
+    @if ($errors->any())
+        <div class="error">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-        h1 {
-            text-align: center;
-            margin-top: 30px;
-            color: #333;
-        }
-
-        .container {
-            width: 80%;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            font-size: 1.1em;
-            margin-bottom: 5px;
-            color: #444;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-            height: 200px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1.1em;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .error {
-            color: red;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h1>Create a New Article</h1>
-
-        @if ($errors->any())
-            <div class="error">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('articles.store') }}" method="POST">
-            @csrf
-            <div>
-                <label>Title:</label>
-                <input type="text" name="title" value="{{ old('title') }}" required>
-            </div>
-            <div>
-                <label>Content:</label>
-                <textarea name="content" required>{{ old('content') }}</textarea>
-            </div>
-            <button type="submit">Create Article</button>
-        </form>
-        <a href="{{ url('/') }}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; font-size: 1.1em; text-decoration: none; border-radius: 4px; text-align: center; transition: background-color 0.3s ease;">
-            Back to Main
-        </a>
-    </div>
-
-</body>
-</html>
+    <form action="{{ route('articles.store') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" required maxlength="30">
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" class="form-control" rows="5" required>{{ old('content') }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Create Article</button>
+    </form>
+</div>
 @endsection

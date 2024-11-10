@@ -42,7 +42,7 @@ class ArticleController extends Controller
     {
         // Validate the request
         $validated = $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|max:30',
             'content' => 'required',
         ]);
 
@@ -79,7 +79,7 @@ class ArticleController extends Controller
 
     // Validate and update the article
     $request->validate([
-        'title' => 'required|string|max:255',
+        'title' => 'required|string|max:30',
         'content' => 'required|string',
     ]);
 
@@ -94,33 +94,53 @@ class ArticleController extends Controller
     // Remove the specified article from storage
     public function destroy($id)
     {
-        $article = Article::find($id);
+        $article = Article::findOrFail($id); // Use findOrFail to ensure we get the correct article
         $article->delete();
-
+    
         return redirect()->route('articles.index')->with('success', 'Article deleted successfully!');
     }
-    ########################################################################
-    public function searchByUser(Request $request)
-    {
-        // Get the search query
-        $query = $request->input('search');
-        
-        // If there's a query, filter the articles by the user's name
-        if ($query) {
-            $articles = Article::whereHas('user', function($q) use ($query) {
-                $q->where('name', 'like', '%' . $query . '%');
-            })->get();
-        } else {
-            // If no search query, return all articles
-            $articles = Article::all();
-        }
-
-        // Pass the articles and query to the view
-        return view('articles.index', compact('articles', 'query'));
-    }
-
-
     
 
+    ########################################################################
 
+    public function searchByUser(Request $request)
+    {
+        $userQuery = $request->input('search');
+        
+        // Reset logic
+        if ($request->has('reset')) {
+            return redirect()->route('articles.index');
+        }
+    
+        if ($userQuery) {
+            $articles = Article::whereHas('user', function($q) use ($userQuery) {
+                $q->where('name', 'like', '%' . $userQuery . '%');
+            })->get();
+        } else {
+            $articles = Article::all();
+        }
+    
+        return view('articles.index', compact('articles', 'userQuery'));
+    }
+    
+    public function searchByArticle(Request $request)
+    {
+        $articleQuery = $request->input('search');
+        
+        // Reset logic
+        if ($request->has('reset')) {
+            return redirect()->route('articles.index');
+        }
+    
+        if ($articleQuery) {
+            $articles = Article::where('title', 'like', '%' . $articleQuery . '%')
+                               ->orWhere('content', 'like', '%' . $articleQuery . '%')
+                               ->get();
+        } else {
+            $articles = Article::all();
+        }
+    
+        return view('articles.index', compact('articles', 'articleQuery'));
+    }
+    
 }

@@ -4,56 +4,82 @@
 
 @section('content')
 <div class="container">
-    @if($query)
-        <h1>Articles by: {{ $query }}</h3>
-        @else
-        <h1>Articles</h1>
-    @endif
-    
-    <!-- Search Form -->
-    <form method="GET" action="{{ route('articles.index') }}" class="mb-4">
-    <input type="text" name="search" class="form-control" placeholder="Search by username..." value="{{ $query ?? '' }}">
-    <button type="submit" class="btn btn-primary mt-2">Search by user</button>
-    @if($query)
-        <a href="{{ route('articles.index') }}" class="btn btn-primary mt-2 ml-2">All articles</a>
-    @endif
-    
-</form>
+@if(isset($userQuery) && $userQuery)
+    <h1>Articles by User: {{ $userQuery }}</h1>
+@elseif(isset($articleQuery) && $articleQuery)
+    <h1>Articles Containing: {{ $articleQuery }}</h1>
+@else
+    <h1>All Articles</h1>
+@endif
 
-    @if($query)
-        <h3>Articles by: {{ $query }}</h3>
-    @endif
+<!-- Search Forms -->
+<div class="d-flex justify-content-between mb-4">
+    <!-- Search by User -->
+    <form method="GET" action="{{ route('articles.searchByUser') }}" class="mr-3">
+        <input type="text" name="search" class="form-control mb-2" placeholder="Search by username..." value="{{ $userQuery ?? '' }}">
+        <button type="submit" class="btn btn-primary">Search by User</button>
+        @if(isset($userQuery) && $userQuery)
+            <button type="submit" class="btn btn-secondary ml-2" name="reset" value="1">Reset</button>
+        @endif
+    </form>
 
-    
+    <!-- Search by Article -->
+    <form method="GET" action="{{ route('articles.searchByArticle') }}">
+        <input type="text" name="search" class="form-control mb-2" placeholder="Search by article..." value="{{ $articleQuery ?? '' }}">
+        <button type="submit" class="btn btn-primary">Search by Article</button>
+        @if(isset($articleQuery) && $articleQuery)
+            <button type="submit" class="btn btn-secondary ml-2" name="reset" value="1">Reset</button>
+        @endif
+    </form>
+
+</div>
+
+
+
+
     @if($articles->isEmpty())
-        <p class="no-articles">No articles found.</p>
+        <h2 class="no-articles">No articles found.</h2>
     @else
         <ul class="article-list">
             @foreach($articles as $article)
                 <li class="article-item">
-                    <a class="articles" href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
-                    <!-- <p>{{ $article->content }}</p> -->
-                    
-                    <div>
-                        <!-- Delete Button -->
-                        @if(auth()->id() === $article->user_id)
-                        <form action="{{ route('articles.destroy', $article->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        @else
-                            <button class="btn btn-secondary" disabled>Delete</button>
-                        </form>
-                        @endif
+                    <div class="d-flex flex-column justify-content-between">
+                        <!-- Image Placeholder-->
+                        <i class="fa-solid fa-image"></i>
 
+                        <!-- View Button -->
+                        
+                        <a href="{{ route('articles.show', $article->id) }}"class="btn btn-primary">View</a>
+                        
                         <!-- Edit Button -->
                         @if(auth()->id() === $article->user_id)
-                            <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-success">Edit</a>
                         @else
                             <button class="btn btn-secondary" disabled>Edit</button>
                         @endif
+
+                        <!-- Delete Button -->
+                        @if(auth()->id() === $article->user_id)
+                            <form action="{{ route('articles.destroy', $article->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        @else
+                            <button class="btn btn-secondary" disabled>Delete</button>
+                        @endif
+                        
                     </div>
-                    
+
+                    <div class="articles" >
+                        <!-- Title -->
+                        <a href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
+                        <!-- Author -->
+                        <p >Posted by: {{ $article->user->name }}</p>
+                        <!-- Contents -->
+                        <!-- <p>{{ $article->content }}</p> -->
+                    </div>
+            
                 </li>
             @endforeach
         </ul>
@@ -72,7 +98,7 @@
 
 @section('styles')
 <style>
-    /* Additional Styling */
+    /* General Styling */
     body {
         font-family: Arial, sans-serif;
         background-color: #f7f7f7;
@@ -95,7 +121,8 @@
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-
+    
+    /* Article List Styling */
     .article-list {
         list-style-type: none;
         padding: 0;
@@ -105,36 +132,48 @@
         padding: 15px;
         border-bottom: 1px solid #ddd;
         margin-bottom: 15px;
-        background-color: #f9f9f9;
+        background-color: #ccc;
         border-radius: 5px;
-        transition: background-color 0.3s ease;
+        transition: all 1s ease;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: start;
+        align-items: start;
+    
     }
 
-    .article-item:hover {
+    /* .article-item:hover {
         background-color: #f1f1f1;
-    }
+    } */
 
     .article-item .articles {
-        font-size: 1.2em;
-        color: #4CAF50;
+        font-size: 1.1em; 
+        margin: 10px;
+        display:flex;
+        flex-direction: column;
+        /* align-items: center; */
+        /* justify-content: center; */
+        padding: 20px;
+        word-break: break-word;
+        /* background-color:green; */
+    }
+
+    .articles a{
+        color: #000;
+        font-size: 2rem;
         text-decoration: none;
-        font-weight: bold;
-    } 
-
-    .article-item .articles:hover {
-        text-decoration: underline;
+        
+    }
+    .articles a:hover{
+        color: #fff;
+    }
+    
+    .articles p{
+        font-size: 1.2rem;
+        margin-top: 30px;
+        border-top: 1px solid black;
     }
 
-    .article-item p {
-        color: #555;
-        font-size: 1em;
-        margin-top: 10px;
-    }
-
-    /* General Button Styling */
+    /* Button Styling */
     .btn {
         font-size: 1em;
         padding: 8px 15px;
@@ -145,37 +184,69 @@
 
     /* Disabled Button Styling */
     button.btn[disabled] {
-        background-color: #f0f0f0; /* Light gray */
-        color: #888; /* Gray text */
+        background-color: #f0f0f0;
+        color: #888;
         cursor: not-allowed;
-        border: 1px solid #ccc; /* Lighter border */
+        border: 1px solid #ccc;
     }
 
-    /* Regular Enabled Button Styling */
-    button.btn.btn-primary {
-        background-color: #007bff;
-        color: white;
+    .btn{
+        width: 100%;
+        margin-bottom: 10px; 
     }
+   
 
-    button.btn.btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    button.btn.btn-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    button.btn.btn-danger:hover {
-        background-color: #c82333;
-    }
-
-    /* Ensure all buttons (disabled and enabled) have the same size */
-    button.btn, button.btn[disabled] {
+    .fa-image{
+        max-width: 200px;
+        max-height: 200px;
+        width: auto;
         height: auto;
-        line-height: 1.5;
-        padding: 8px 15px;
-        font-size: 1em;
+        font-size:15rem;
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 768px) {
+        /* Container width */
+        .container {
+            width: 90%;
+        }
+
+        /* Article Item */
+        .article-item {
+            flex-direction: row;
+            align-items: flex-start; /* Align items vertically */
+        }
+
+        .article-item p {
+            font-size: 0.9em;
+        }
+
+
+        .d-flex {
+            flex-direction: column;
+        }
+
+        .article-list {
+            padding-left: 0; /* Remove default padding on mobile */
+        }
+
+        .article-item {
+            margin-bottom: 20px; /* Space out article items */
+        }
+    
+    }
+    @media (max-width: 600px) {
+        .container{
+            margin:0 auto;
+            padding:0;
+        }
+        .article-item {
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Center items horizontally */
+        }
+
+
     }
 
 </style>

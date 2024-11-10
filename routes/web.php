@@ -11,35 +11,37 @@ Route::get('/', function () {
     return view('main');  // This will be the new main page view
 });
 
-// User management routes (protected by auth middleware)
-Route::middleware('auth')->group(function () {
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    // Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    // Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-});
 
-// Registration Routes (no middleware, public access)
+//(no middleware, public access)
+// Registration 
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [UserController::class, 'register']);
-
-// Login Routes (no middleware, public access)
+// Login
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login']);
-
-// Logout Route
+// Logout
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-
+// Articles
 Route::resource('articles', ArticleController::class);
 
-Route::get('/articles', [ArticleController::class, 'searchByUser'])->name('articles.index');
+// Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/user/search', [ArticleController::class, 'searchByUser'])->name('articles.searchByUser');
+Route::get('/articles/article/search', [ArticleController::class, 'searchByArticle'])->name('articles.searchByArticle');
 
-// Article Routes (protected by auth middleware)
+
+
+
+//(protected by auth middleware)
+// Article Routes 
 Route::middleware('auth')->group(function () {
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
     Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
     Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+    Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 });
-
+// User management routes 
+Route::middleware('auth')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+});

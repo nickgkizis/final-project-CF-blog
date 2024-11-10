@@ -22,7 +22,7 @@
                 <i class="fas fa-pencil-alt fa-2x me-3 text-secondary"></i>
                 <div>
                     <h4 class="mb-1">Create Article</h4>
-                    <p class="mb-0">Publish your articles</p>
+                    <p class="mb-0">Publish or edit articles</p>
                 </div>
             </a>
             <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action d-flex align-items-center">

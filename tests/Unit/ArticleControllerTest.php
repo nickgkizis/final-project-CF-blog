@@ -23,7 +23,7 @@ class ArticleControllerTest extends TestCase
         $user = User::factory()->create(); // Create a user
         Article::factory(3)->create(['user_id' => $user->id]); // Create 3 articles for that user
 
-        $response = $this->get(route('articles.index'));
+        $response = $this->get(route('articles.allArticles'));
 
         $response->assertStatus(200);
         $response->assertViewHas('articles');
@@ -117,7 +117,7 @@ class ArticleControllerTest extends TestCase
 
         $response = $this->get(route('articles.edit', $article->id));
 
-        $response->assertRedirect(route('articles.index'));
+        $response->assertRedirect(route('articles.allArticles'));
         $response->assertSessionHas('error', 'You are not authorized to edit this article.');
     }
 
@@ -163,7 +163,7 @@ class ArticleControllerTest extends TestCase
             'content' => 'Updated content.',
         ]);
 
-        $response->assertRedirect(route('articles.index'));
+        $response->assertRedirect(route('articles.allArticles'));
         $response->assertSessionHas('error', 'You are not authorized to update this article.');
     }
 
@@ -180,7 +180,7 @@ class ArticleControllerTest extends TestCase
 
         $response = $this->delete(route('articles.destroy', $article->id));
 
-        $response->assertRedirect(route('articles.index'));
+        $response->assertRedirect(route('articles.allArticles'));
         $response->assertSessionHas('success', 'Article deleted successfully!');
         $this->assertDatabaseMissing('articles', [
             'id' => $article->id,
@@ -197,7 +197,7 @@ class ArticleControllerTest extends TestCase
         $user = User::factory()->create();
         Article::factory()->create(['user_id' => $user->id, 'title' => 'Test Article']);
         
-        $response = $this->get(route('articles.index', ['search' => $user->name]));
+        $response = $this->get(route('articles.allArticles', ['search' => $user->name]));
 
         $response->assertStatus(200);
         $response->assertSee('Test Article');
