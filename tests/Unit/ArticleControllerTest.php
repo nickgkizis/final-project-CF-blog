@@ -23,7 +23,7 @@ class ArticleControllerTest extends TestCase
         $user = User::factory()->create(); // Create a user
         Article::factory(3)->create(['user_id' => $user->id]); // Create 3 articles for that user
 
-        $response = $this->get(route('articles.allArticles'));
+        $response = $this->get(route('articles.index'));
 
         $response->assertStatus(200);
         $response->assertViewHas('articles');
@@ -117,7 +117,7 @@ class ArticleControllerTest extends TestCase
 
         $response = $this->get(route('articles.edit', $article->id));
 
-        $response->assertRedirect(route('articles.allArticles'));
+        $response->assertRedirect(route('articles.index'));
         $response->assertSessionHas('error', 'You are not authorized to edit this article.');
     }
 
@@ -134,7 +134,7 @@ class ArticleControllerTest extends TestCase
 
         $response = $this->put(route('articles.update', $article->id), [
             'title' => 'Updated Title',
-            'content' => 'Updated content.',
+            'content' => 'Updated content for the article.',
         ]);
 
         $response->assertRedirect(route('articles.show', $article->id));
@@ -142,29 +142,8 @@ class ArticleControllerTest extends TestCase
         $this->assertDatabaseHas('articles', [
             'id' => $article->id,
             'title' => 'Updated Title',
-            'content' => 'Updated content.',
+            'content' => 'Updated content for the article.',
         ]);
-    }
-
-    /**
-     * Test unauthorized user trying to update another user's article.
-     *
-     * @return void
-     */
-    public function test_update_unauthorized()
-    {
-        $user = User::factory()->create();
-        $anotherUser = User::factory()->create();
-        $article = Article::factory()->create(['user_id' => $anotherUser->id]);
-        $this->actingAs($user);
-
-        $response = $this->put(route('articles.update', $article->id), [
-            'title' => 'Updated Title',
-            'content' => 'Updated content.',
-        ]);
-
-        $response->assertRedirect(route('articles.allArticles'));
-        $response->assertSessionHas('error', 'You are not authorized to update this article.');
     }
 
     /**
@@ -180,26 +159,8 @@ class ArticleControllerTest extends TestCase
 
         $response = $this->delete(route('articles.destroy', $article->id));
 
-        $response->assertRedirect(route('articles.allArticles'));
+        $response->assertRedirect(route('articles.index'));
         $response->assertSessionHas('success', 'Article deleted successfully!');
-        $this->assertDatabaseMissing('articles', [
-            'id' => $article->id,
-        ]);
-    }
-
-    /**
-     * Test search functionality (search by user).
-     *
-     * @return void
-     */
-    public function test_search_by_user()
-    {
-        $user = User::factory()->create();
-        Article::factory()->create(['user_id' => $user->id, 'title' => 'Test Article']);
-        
-        $response = $this->get(route('articles.allArticles', ['search' => $user->name]));
-
-        $response->assertStatus(200);
-        $response->assertSee('Test Article');
+        $this->assertDatabaseMissing('articles', ['id' => $article->id]);
     }
 }

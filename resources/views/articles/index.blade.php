@@ -12,6 +12,8 @@
     <h1>All Articles</h1>
 @endif
 
+
+
 <!-- Search Forms -->
 <div class="d-flex justify-content-between mb-4">
     <!-- Search by User -->
@@ -23,6 +25,17 @@
         @endif
     </form>
 
+    <!-- Sorting button -->
+    <div class="sort-btn">
+        <a href="{{ route('articles.sort', ['order' => request('order') === 'asc' ? 'desc' : 'asc']) }}" class="btn btn-primary">
+            @if (request('order') === 'asc')
+                <i class="fas fa-sort-amount-up"></i> Oldest to Newest
+            @else
+                <i class="fas fa-sort-amount-down"></i> Newest to Oldest
+            @endif
+        </a>
+    </div>
+    
     <!-- Search by Article -->
     <form method="GET" action="{{ route('articles.searchByArticle') }}">
         <input type="text" name="search" class="form-control mb-2" placeholder="Search by article..." value="{{ $articleQuery ?? '' }}">
@@ -33,9 +46,6 @@
     </form>
 
 </div>
-
-
-
 
     @if($articles->isEmpty())
         <h2 class="no-articles">No articles found.</h2>
@@ -75,7 +85,8 @@
                         <!-- Title -->
                         <a href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
                         <!-- Author -->
-                        <p >Posted by: {{ $article->user->name }}</p>
+                        <p >By: {{ $article->user->name }} <br> {{ $article->created_at->format('d/m/Y') }}</
+                        </p>
                         <!-- Contents -->
                         <!-- <p>{{ $article->content }}</p> -->
                     </div>
@@ -88,6 +99,11 @@
     <!-- Create Article Button -->
     <div class="text-center mt-4">
         <a href="{{ route('articles.create') }}" class="btn btn-success btn-lg">Create New Article</a>
+    </div>
+
+     <!-- Pagination Links -->
+     <div class="pagination-container text-center mt-4">
+        {{ $articles->links() }}
     </div>
 
     <!-- <a href="{{ url('/') }}" class="btn btn-success mt-4">Back to Main</a> -->
@@ -180,6 +196,10 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+    }
+
+    .sort-btn{
+        margin-top: auto;
     }
 
     /* Disabled Button Styling */

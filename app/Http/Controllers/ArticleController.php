@@ -11,17 +11,17 @@ class ArticleController extends Controller
 {
     ########################################################################
     public function index()
-    {
-        // Fetch all articles
-        $articles = Article::all(); // Or use other methods like paginate(), etc.
+{
+    // Fetch articles ordered from newest to oldest with pagination
+    $articles = Article::orderBy('created_at', 'desc')->paginate(5);
 
-        // Pass the $articles variable to the view
-        return view('articles.index', compact('articles')); // or ['articles' => $articles]
-    }
+    // Pass the $articles variable to the view
+    return view('articles.index', compact('articles'));
+}
+
+
     ########################################################################
     // Display the specified article
-    // ArticleController.php
-
     public function show($id)
     {
         $article = Article::findOrFail($id);
@@ -95,6 +95,11 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $article = Article::findOrFail($id); // Use findOrFail to ensure we get the correct article
+        if (auth()->id() !== $article->user_id) {
+            return redirect()->route('articles.index')->with('error', 'You are not authorized to delete this article.');
+        }
+        
+
         $article->delete();
     
         return redirect()->route('articles.index')->with('success', 'Article deleted successfully!');
@@ -104,43 +109,60 @@ class ArticleController extends Controller
     ########################################################################
 
     public function searchByUser(Request $request)
-    {
-        $userQuery = $request->input('search');
-        
-        // Reset logic
-        if ($request->has('reset')) {
-            return redirect()->route('articles.index');
-        }
-    
-        if ($userQuery) {
-            $articles = Article::whereHas('user', function($q) use ($userQuery) {
-                $q->where('name', 'like', '%' . $userQuery . '%');
-            })->get();
-        } else {
-            $articles = Article::all();
-        }
-    
-        return view('articles.index', compact('articles', 'userQuery'));
+{
+    $userQuery = $request->input('search');
+
+    // Reset logic
+    if ($request->has('reset')) {
+        return redirect()->route('articles.index');
     }
-    
-    public function searchByArticle(Request $request)
-    {
-        $articleQuery = $request->input('search');
-        
-        // Reset logic
-        if ($request->has('reset')) {
-            return redirect()->route('articles.index');
-        }
-    
-        if ($articleQuery) {
-            $articles = Article::where('title', 'like', '%' . $articleQuery . '%')
-                               ->orWhere('content', 'like', '%' . $articleQuery . '%')
-                               ->get();
-        } else {
-            $articles = Article::all();
-        }
-    
-        return view('articles.index', compact('articles', 'articleQuery'));
+
+    if ($userQuery) {
+        $articles = Article::whereHas('user', function($q) use ($userQuery) {
+            $q->where('name', 'like', '%' . $userQuery . '%');
+        })->paginate(5)->appends(['search' => $userQuery]);
+    } else {
+        $articles = Article::paginate(5);
     }
+
+    return view('articles.index', compact('articles', 'userQuery'));
+}
+
     
+public function searchByArticle(Request $request)
+{
+    $articleQuery = $request->input('search');
+
+    // Reset logic
+    if ($request->has('reset')) {
+        return redirect()->route('articles.index');
+    }
+
+    if ($articleQuery) {
+        $articles = Article::where('title', 'like', '%' . $articleQuery . '%')
+                           ->orWhere('content', 'like', '%' . $articleQuery . '%')
+                           ->paginate(5)->appends(['search' => $articleQuery]);
+    } else {
+        $articles = Article::paginate(5);
+    }
+
+    return view('articles.index', compact('articles', 'articleQuery'));
+}
+
+public function sortByDate(Request $request)
+{
+    // Retrieve order, defaulting to 'desc'
+    $order = $request->input('order', 'desc');
+
+    // Ensure the value is either 'asc' or 'desc' to prevent errors
+    if (!in_array($order, ['asc', 'desc'])) {
+        abort(404);
+    }
+
+    // Fetch sorted articles with pagination and apply sorting order
+    $articles = Article::orderBy('created_at', $order)->paginate(5)->appends(['order' => $order]);
+
+    return view('articles.index', compact('articles', 'order'));
+}
+
 }

@@ -15,10 +15,6 @@ header {
     padding: 25px 0;
     color: #fff;
 }
-nav a {
-    color: #fff;
-    text-decoration: none;
-}
 .list-group-item {
     font-size: 18px;
     transition: background-color 0.3s ease;
@@ -27,7 +23,7 @@ nav a {
     background-color: #007bff;
     color: white;
 }
-span {
+.nav-bar span {
     font-size: 2.5rem;
     color: #6c757d;
     margin-left: 10px;
@@ -38,10 +34,12 @@ span {
 .nav-mid{
     display: flex;
 }
-nav a{
+.nav-bar a{
+    color: #fff;
+    text-decoration: none;
     font-size: 2.5rem;
 }
-nav i{
+.nav-bar i{
     font-size: 2.5rem;
 }
 
@@ -54,39 +52,13 @@ footer {
     margin-top: auto; /* Pushes footer to the bottom */
 }
 
-        
 /* Hiding SVG icons in pagination links */
-.pagination .page-link svg {
+svg {
     display: none; /* Hides the SVG arrows */
 }
-
-/* Ensuring pagination link styles */
-.pagination .page-item {
-    margin: 0 5px; /* Adjusts spacing between items */
+nav a, nav span{
+    color:#000;
 }
-
-.pagination .page-link {
-    font-size: 0.9rem; /* Adjusts size of page number links */
-    padding: 0.4rem 0.6rem; /* Adjusts padding */
-    color: #007bff; /* Primary color for links */
-    text-decoration: none; /* Removes underline */
-}
-
-.pagination .page-item.active .page-link {
-    background-color: #007bff; /* Background color for active item */
-    color: white; /* Text color for active item */
-}
-
-.pagination .page-link:hover {
-    background-color: #e2e6ea; /* Background color on hover */
-    color: #0056b3; /* Text color on hover */
-}
-.bg-primary {
-    background-color: aqua;
-    color: black;
-}
-
-
 
 /* Modal Styling */
 .login-success-modal {

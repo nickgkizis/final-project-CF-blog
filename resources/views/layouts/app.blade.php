@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <nav class="text-center d-flex justify-content-center align-items-center">
+    <nav class="nav-bar text-center d-flex justify-content-center align-items-center">
         <div class="nav-out d-flex">
             <div class="nav-mid me-5">
                 <div class="nav-i">

@@ -27,6 +27,9 @@ Route::resource('articles', ArticleController::class);
 // Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/user/search', [ArticleController::class, 'searchByUser'])->name('articles.searchByUser');
 Route::get('/articles/article/search', [ArticleController::class, 'searchByArticle'])->name('articles.searchByArticle');
+Route::get('/articles/article/sort', [ArticleController::class, 'sortByDate'])->name('articles.sort');
+
+
 
 
 
