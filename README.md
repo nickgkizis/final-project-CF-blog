@@ -51,27 +51,16 @@ The app’s structure is straightforward to navigate and extend:
 ## ⚙️ **Getting Started**
 
 ### 1. **Clone the Repository**
-```bash
-   git clone https://github.com/nickgkizis/final-project-CF-blog.git
-```
-
+    git clone https://github.com/nickgkizis/final-project-CF-blog.git
 ### 2. **Install Dependencies**
-```bash
     composer install
     npm install
-```
 ### 3. **Setup Environment**
-    Rename .env.example to .env.
-    Update database credentials in the .env file.
+Rename .env.example to .env.
+Update database credentials in the .env file.
 ### 4. **Run Migrations and Seeders**
-```bash
     php artisan migrate --seed
-```
 ### 5. **Start the Application**
-```bash
     php artisan serve
-```
 ### 6. **Run Tests**
-```bash
     php artisan test
-```
