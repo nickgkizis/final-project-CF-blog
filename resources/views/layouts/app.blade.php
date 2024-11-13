@@ -16,22 +16,22 @@
             <div class="nav-mid me-5">
                 <div class="nav-i">
                     <a href="{{ url('/') }}" class="vertical-line"><i class="fa-solid fa-house"></i></a>
-                    <p>Home</p>
+                    <h3>Home</h3>
                 </div>
                 <div class="nav-i">
                     <a href="{{ route('articles.index') }}" class="vertical-line"><i class="fa-solid fa-book-open"></i></a>
-                    <p>Articles</p>
+                    <h3>Articles</h3>
                 </div>
                 <div class="nav-i">
                     <a href="{{ route('articles.create') }}" class="vertical-line"><i class="fa-solid fa-pencil-alt"></i></a>
-                    <p>Create</p>
+                    <h3>Create</h3>
                 </div>
             </div>
             <div class="nav-mid ms-5">
                 @auth
                 <div class="nav-i">
                     <span><i class="fa-solid fa-lock-open"></i></span>
-                    <p>User: {{ auth()->user()->name }}!</p>
+                    <h3>User: {{ auth()->user()->name }}!</h3>
                 </div>
 
                 <div class="nav-i">
@@ -39,7 +39,7 @@
                     <a href="{{ route('logout') }}" class="text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
-                    <p>Logout</p>
+                    <h3>Logout</h3>
                     <!-- Hidden form for logout -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -49,20 +49,19 @@
                 @else  
                 <div class="nav-i">
                     <span><i class="fa-solid fa-lock fa-lg"></i></span>
-                    <p>Viewing as guest</p>
+                    <h3>Viewing as guest</h3>
                 </div>
                 <div class="nav-i">
                     <a href="{{ route('login') }}"><i class="fas fa-key"></i></a>
-                    <p>Login</p>
+                    <h3>Login</h3>
                 </div>
                 <div class="nav-i">
                     <a href="{{ route('register') }}"><i class="fas fa-user-plus"></i></a>
-                    <p>Register</p>
+                    <h3>Register</h3>
                 </div>
                 @endauth
             </div>
-        </div>
-        
+        </div> 
     </nav>
 </header>
 

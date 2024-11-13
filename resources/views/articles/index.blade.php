@@ -184,9 +184,10 @@
     }
     
     .articles p{
+        width:fit-content;
         font-size: 1.2rem;
         margin-top: 30px;
-        border-top: 1px solid black;
+        border-top:5px double black;
     }
 
     /* Button Styling */
@@ -195,7 +196,7 @@
         padding: 8px 15px;
         border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     .sort-btn{

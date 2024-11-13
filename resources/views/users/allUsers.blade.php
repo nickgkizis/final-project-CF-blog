@@ -3,10 +3,11 @@
 @section('title', 'Main Page')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('styles/users/Users.blade.css') }}">
 <div class="container my-5">
     <div class="d-flex justify-content-between mb-4">
         <h1>All Users</h1>
-        <!-- Back to Main Button (optional) -->
+        <!-- Back to Main Button-->
         <!-- <a href="{{ url('/') }}" class="btn btn-secondary">Back to Main</a> -->
     </div>
 
@@ -46,37 +47,4 @@
         </div>
     @endif
 </div>
-
-@endsection
-@section('styles')
-<style>
-    /* Additional Styling */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        width: 80%;
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .user{
-        margin-bottom: 20px;
-        padding: 20px;
-        background-color: #ccc;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        
-    }
-
-    
-</style>
 @endsection
