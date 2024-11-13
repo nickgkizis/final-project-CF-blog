@@ -30,11 +30,11 @@ Welcome to **My Blog App**, a user-friendly and robust blogging platform built w
 ---
 
 ## 📚 **Technology Stack**
--**Framework:** Laravel
--**Frontend:** HTML, CSS, JavaScript, Bootstrap
--**Database:** MySQL
--**Authentication:** Laravel Auth
--**Testing:** PHP Unit
+- **Framework:** Laravel
+- **Frontend:** HTML, CSS, JavaScript, Bootstrap
+- **Database:** MySQL
+- **Authentication:** Laravel Auth
+- **Testing:** PHP Unit
 
 ---
 
@@ -51,26 +51,27 @@ The app’s structure is straightforward to navigate and extend:
 ## ⚙️ **Getting Started**
 
 ### 1. **Clone the Repository**
-   ```bash
+```bash
    git clone https://github.com/nickgkizis/final-project-CF-blog.git
-   ```
+```
+
 ### 2. **Install Dependencies**
-    ```bash
+```bash
     composer install
     npm install
-    ```
+```
 ### 3. **Setup Environment**
     Rename .env.example to .env.
     Update database credentials in the .env file.
 ### 4. **Run Migrations and Seeders**
-    ```bash
+```bash
     php artisan migrate --seed
-    ```
+```
 ### 5. **Start the Application**
-    ```bash
+```bash
     php artisan serve
-    ```
+```
 ### 6. **Run Tests**
-    ```bash
+```bash
     php artisan test
-    ```
+```
