@@ -18,14 +18,16 @@
     background-color: transparent !important; 
     z-index: 5;
     border-left:10px solid grey;
-    border-right:10px solid grey;
-    /* border-right:transparent; */
-    border-top:transparent;
-    border-bottom:transparent;
+    border-right:3px solid grey;
+    border-top:3px solid grey !important;
+    border-bottom:10px solid grey !important;
+    transition: all 1s ease-in-out;
+    opacity: 0.9;
 }
 .list-group-item:hover{
     scale:1.2;
     transition: all 1s ease-in-out;
+    opacity: 1;
 }
 /* old look */
 /* .list-group-item:hover {
