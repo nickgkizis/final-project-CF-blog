@@ -54,10 +54,14 @@ The app’s structure is straightforward to navigate and extend:
     git clone https://github.com/nickgkizis/final-project-CF-blog.git
 ### 2. **Install Dependencies**
     composer install
-    npm install
 ### 3. **Setup Environment**
-Rename .env.example to .env.
-Update database credentials in the .env file.
+  - Rename .env.example to .env 
+  - Generate an app key
+    php artisan key:generate
+  - Update database credentials in the .env file.
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_user
+    DB_PASSWORD=your_database_password
 ### 4. **Run Migrations and Seeders**
     php artisan migrate --seed
 ### 5. **Start the Application**
