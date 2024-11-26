@@ -29,11 +29,6 @@ Route::get('/articles/user/search', [ArticleController::class, 'searchByUser'])-
 Route::get('/articles/article/search', [ArticleController::class, 'searchByArticle'])->name('articles.searchByArticle');
 Route::get('/articles/article/sort', [ArticleController::class, 'sortByDate'])->name('articles.sort');
 
-
-
-
-
-
 //(protected by auth middleware)
 // Article Routes 
 Route::middleware('auth')->group(function () {
