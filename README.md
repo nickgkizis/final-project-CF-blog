@@ -52,9 +52,15 @@ The app’s structure is straightforward to navigate and extend:
 
 ### 1. **Clone the Repository**
     git clone https://github.com/nickgkizis/final-project-CF-blog.git
-### 2. **Install Dependencies**
+### 2. **Install PHP**
+    Download according to your system
+### 3. **Install Composer**
+    Download according to your system
+### 4. **Install Laravel**
+    composer global require laravel/installer
+### 5. **Install Dependencies**
     composer install
-### 3. **.env File**
+### 6. **.env File**
 Rename .env.example to .env 
 Generate an app key
 
@@ -64,9 +70,9 @@ Update database credentials in the .env file.
     DB_DATABASE=your_database_name
     DB_USERNAME=your_database_user
     DB_PASSWORD=your_database_password
-### 4. **Run Migrations and Seeders**
+### 7. **Run Migrations and Seeders**
     php artisan migrate --seed
-### 5. **Start the Application**
+### 8. **Start the Application**
     php artisan serve
-### 6. **Run Tests**
+### 9. **Run Tests**
     php artisan test
